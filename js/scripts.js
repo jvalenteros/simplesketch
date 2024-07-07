@@ -31,6 +31,18 @@ const canvas = document.getElementById('canvas');
             [lastX, lastY] = [e.clientX, e.clientY];
         }
 
+        function getCoordinates(e) {
+            let x, y;
+            if (e.type.includes('mouse')) {
+                x = e.clientX
+                y = e.clientY
+            } else if (e.type.includes('touch')) {
+                const rect = canvas.getBoundingClientRect();
+                x = e.touches[0].clientX - rect.left;
+                y = e.touches[0].clientY - rect.top;
+            }
+        }
+
         function stopDrawing() {
             isDrawing = false;
         }
@@ -45,5 +57,17 @@ const canvas = document.getElementById('canvas');
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
         clearButton.addEventListener('click', clearCanvas);
+        
+        // Mouse events
+        canvas.addEventListener('mousedown', getCoordinates);
+        canvas.addEventListener('mousemove', getCoordinates);
+        canvas.addEventListener('mouseup', getCoordinates);
+        canvas.addEventListener('mouseout', getCoordinates);
 
+        // Touch events
+        canvas.addEventListener('touchstart', getCoordinates);
+        canvas.addEventListener('touchmove', getCoordinates);
+        canvas.addEventListener('touchend', getCoordinates);
+        canvas.addEventListener('touchcancel', getCoordinates);
+        
         resizeCanvas();
