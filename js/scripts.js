@@ -1,3 +1,4 @@
+/* Canvas Sketch Scripts*/
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 const colorPicker = document.getElementById('color');
@@ -60,6 +61,8 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+
+// Event Listeners
 function saveState() {
     undoStack.push(canvas.toDataURL());
     redoStack = [];
@@ -81,6 +84,7 @@ function redo() {
     }
 }
 
+// Helper Functions
 function redrawCanvas(imgData = null) {
     if (imgData) {
         const img = new Image();
@@ -92,6 +96,7 @@ function redrawCanvas(imgData = null) {
     }
 }
 
+// Download picture of canvas
 function saveCanvas() {
     const dataURL = canvas.toDataURL('image/png');
     const link = document.createElement('a');
